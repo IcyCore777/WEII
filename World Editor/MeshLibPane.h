@@ -81,4 +81,6 @@ namespace GOTHIC_ENGINE {
 		DECLARE_MESSAGE_MAP()
 	};
 
+#define PRESETLIB CMainFrame::mainframe->m_wndPresetLib
+#define MESHLIBDLG   CMainFrame::mainframe->m_wndMeshLib
 }

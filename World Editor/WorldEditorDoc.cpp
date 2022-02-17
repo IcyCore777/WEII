@@ -6,7 +6,9 @@ namespace GOTHIC_ENGINE {
 
 
 	bool bMeshLibLoaded = false;
-
+#ifdef __G1
+	bool& logStat = *(bool*)0x0085EB00;
+#endif
 	
 	HOOK Hook_oCGame_LoadGame AS(&oCGame::LoadGame, &oCGame::LoadGame_Union);
 
@@ -199,27 +201,19 @@ namespace GOTHIC_ENGINE {
 #else
 		zCVob::SetShowHelperVisuals(TRUE);
 #endif// _G1A
-		Log("::Handling World after load::VobTree corr");
 		VobTreeCorrection(CString("TRA_HE_POLY"));
-		Log("::Handling World after load::Disable AI");
 		oCNpc::SetNpcAIDisabled(TRUE);
-		Log("::Handling World after load::Add player");
 		oCNpc::player = (oCNpc*)ogame->GetGameWorld()->CreateVob(zVOB_TYPE_NSC, parser->GetIndex("PC_HERO"));
 		player->dontWriteIntoArchive = true;
 		player->SetSleeping(TRUE);
 		player->SetPhysicsEnabled(FALSE);
-		Log("::Handling World after load::Set disable spwn");
 		ogame->GetSpawnManager()->SetSpawningEnabled(FALSE);
-		Log("::World handled!");
 	}
 
 	void oCGame::LoadGame_Union(int slot, const zSTRING& name)
 	{
 		VirtualVobTree_Portals::GetInstance().DeleteChilds();
 		VirtualVobTree_Globals::GetInstance().DeleteChilds();
-
-
-
 #ifdef __G1
 		logStat = false;
 #endif
@@ -369,7 +363,6 @@ namespace GOTHIC_ENGINE {
 		return 0;
 	}
 
-
 	BOOL CEditorDoc::OnOpenDocument(LPCTSTR lpszPathName)
 	{
 
@@ -378,7 +371,6 @@ namespace GOTHIC_ENGINE {
 		ogame->LoadGame(0, lpszPathName);
 		return TRUE;
 	}
-
 
 	bool CEditorDoc::InsertVob(zCVob* vob, zVEC3* pos, zVEC3* dir, zCVob* parent)
 	{
@@ -511,55 +503,62 @@ namespace GOTHIC_ENGINE {
 			ogame->world->AddVob(ogame->GetCamera()->connectedVob);
 		return TRUE;
 	}
-}
 
-
-
-
-void GOTHIC_ENGINE::CEditorDoc::OnUpdateFileNew(CCmdUI* pCmdUI)
-{
-	if (!CEditorView::view->world)
-		pCmdUI->Enable(FALSE);
-	else
-		pCmdUI->Enable(TRUE);
-}
-
-
-void GOTHIC_ENGINE::CEditorDoc::OnUpdateFileSaveAs(CCmdUI* pCmdUI)
-{
-	if (!CEditorView::view->world)
-		pCmdUI->Enable(FALSE);
-	else
-		pCmdUI->Enable(TRUE);
-}
-
-
-void GOTHIC_ENGINE::CEditorDoc::OnFileNew()
-{
-	if (CEditorView::view->world)
+	void CEditorDoc::OnUpdateFileNew(CCmdUI* pCmdUI)
 	{
-		bWorldLoaded = FALSE;
-		zERR_MESSAGE(3, 0, "zCWorld::Disposing world...");
-		if (ogame->world) ogame->GetGameWorld()->DisposeWorld();
-		CEditorView::view->world = NULL;
-		CEditorView::view->RedrawWindow();
-
-
-		CMainFrame::mainframe->m_wndVobList.m_wndVobList.SetRedraw(FALSE);
-		CMainFrame::mainframe->m_wndVobList.m_wndVobList.DeleteAllItems();
-		CMainFrame::mainframe->m_wndVobList.m_wndVobList.SetRedraw(TRUE);
-		CMainFrame::mainframe->m_wndVobList.m_wndVobList.Invalidate(FALSE);
-		zERR_MESSAGE(3, 0, "zCWorld::Ready to load world!");
-
-		OnNewDocument();
-		SetTitle("");
-		CEditorView::view->world = Null;
+		if (!CEditorView::view->world)
+			pCmdUI->Enable(FALSE);
+		else
+			pCmdUI->Enable(TRUE);
 	}
-	
+
+	void CEditorDoc::OnUpdateFileSaveAs(CCmdUI* pCmdUI)
+	{
+		if (!CEditorView::view->world)
+			pCmdUI->Enable(FALSE);
+		else
+			pCmdUI->Enable(TRUE);
+	}
+
+	void CEditorDoc::OnFileNew()
+	{
+		if (CEditorView::view->world)
+		{
+			bWorldLoaded = FALSE;
+			OutputBuild("oCWorld::Disposing world...");
+			if (ogame->world) ogame->GetGameWorld()->DisposeWorld();
+			CEditorView::view->world = NULL;
+			CEditorView::view->RedrawWindow();
+
+
+			CMainFrame::mainframe->m_wndVobList.m_wndVobList.SetRedraw(FALSE);
+			CMainFrame::mainframe->m_wndVobList.m_wndVobList.DeleteAllItems();
+			CMainFrame::mainframe->m_wndVobList.m_wndVobList.SetRedraw(TRUE);
+			CMainFrame::mainframe->m_wndVobList.m_wndVobList.Invalidate(FALSE);
+			OutputBuild("oCWorld::Ready to load world!");
+
+			OnNewDocument();
+			SetTitle("");
+			CEditorView::view->world = Null;
+		}
+	}
+
+	void CEditorDoc::OnTest()
+	{
+		MessageBox(0, "TEST TEST TEST", 0, 0);
+	}
 }
 
 
-void GOTHIC_ENGINE::CEditorDoc::OnTest()
-{
-	MessageBox(0, "TEST TEST TEST", 0, 0);
-}
+
+
+
+
+
+
+
+
+
+
+
+

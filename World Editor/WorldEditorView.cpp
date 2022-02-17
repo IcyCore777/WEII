@@ -1,49 +1,6 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-
-/*
-ÔÈÊÑ ÍÀÕÓÉ ÅÁÀÒÜ ÓÓÓ ÑÓÊÀ ÁËßÄÜ ÏÈÇÄÅÖ ÓÓÓ ÁËÄ ÑÓÊÀÀÀÀÛôàûâûàâûàâ
-
- bool TraceRay( const zCLine2D& line, zVEC2* intersec = Null ) const
-	{
-		zCLine2D line1 = *this;
-		zCLine2D line2 = line;
-
-		float angle = line1.GetAngle();
-		line1.Rotate(-angle);
-		line2.Rotate(-angle, line1[VA]);
-
-		float vx_mid = line1[VA][VX];
-		float vx_min = min(line2[VA][VX], line2[VB][VX]);
-		float vx_max = max(line2[VA][VX], line2[VB][VX]);
-
-		if (vx_mid >= vx_min && vx_mid <= vx_max) {
-			float vx_length = vx_max - vx_min;
-			float vx_collide = vx_mid - vx_min;
-			float vx_multiplier = SafeDiv(1.0f, vx_length) * vx_collide;
-			zCLine2D line3 = line2.Dot(vx_multiplier);
-
-			float vy_mid = line3[VB][VY];
-			float vy_min = min(line1[VA][VY], line1[VB][VY]);
-			float vy_max = max(line1[VA][VY], line1[VB][VY]);
-
-			if (vy_mid >= vy_min && vy_mid <= vy_max) {
-				if (intersec)
-					*intersec = line[VA] + line.GetVector() * vx_multiplier;
-
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-
-*/
-
-
-
 namespace GOTHIC_ENGINE {
 
 
@@ -57,26 +14,24 @@ namespace GOTHIC_ENGINE {
 	const char* SPC_APPLICATION_NAME = "Union Based World Editor for Gothic";
 #endif
 
-	const char* SPC_VERSION = "ver 0.666";
+	const char* SPC_VERSION = "ver 0.2";
 	const char* SPC_APPLICATION_DESCRIPTION = "The Editor for the ZenGin";
 	const char* SPC_COMPANY_NAME = "300$";
-	const char* SPC_AUTHOR_NAMES = "Gratt, Saturas & Bratishka";
+	const char* SPC_AUTHOR_NAMES = "Gratt, Saturas";
 	const char* SPC_YEAR_START = "2021";
-	const char* SPC_YEAR_END = "2021";
+	const char* SPC_YEAR_END = "2022";
 	const char* SPC_COMPILE_DATE = __DATE__;
 	const char* SPC_COMPILE_TIME = __TIME__;
 
-
-
+	const char* engineObjects = "Engine objects";
+	const char* invalidSrcFile = "INVALID_SOURCE_FILE.3DS";
 
 	CEditorView* CEditorView::view = 0;
 
 	IMPLEMENT_DYNCREATE(CEditorView, CView)
 
 	BEGIN_MESSAGE_MAP(CEditorView, CView)
-		ON_COMMAND(ID_FILE_PRINT, &CView::OnFilePrint)
-		ON_COMMAND(ID_FILE_PRINT_DIRECT, &CView::OnFilePrint)
-		ON_COMMAND(ID_FILE_PRINT_PREVIEW, &CEditorView::OnFilePrintPreview)
+
 		ON_WM_CONTEXTMENU()
 		ON_WM_RBUTTONUP()
 		ON_WM_LBUTTONDOWN()
@@ -86,9 +41,11 @@ namespace GOTHIC_ENGINE {
 
 	CEditorView::CEditorView() 
 	{
-		isReady = FALSE;
-		view = this;
-		world = Null;
+		isStartScreen	= FALSE;
+		view			= this;
+		world			= Null;
+		pickedWP		= Null;
+		pickedWP2nd		= Null;
 	}
 
 	CEditorView::~CEditorView()
@@ -101,56 +58,24 @@ namespace GOTHIC_ENGINE {
 		return CView::PreCreateWindow(cs);
 	}
 
-	void CEditorView::OnNewpreset()
+
+
+	//-----------------------------------------------------------------
+	// View operations
+	//=================================================================
+	void CEditorView::VobGoto(zCVob* vob)
 	{
-		zCVob* pickedVob = GetSelectedVob();
-		if (!pickedVob) return;
+		zVEC3 dir = vob->GetAtVectorWorld();
+#ifdef __G1A
+		zVEC3 pos = vob->GetPositionWorld();
+#else
+		zVEC3 pos;  vob->GetPositionWorld(pos);
+#endif
+		zVEC3 vob_pos = vob->GetPositionWorld();
+		zVEC3 cam_vec = ogame->GetCameraVob()->GetAtVectorWorld();
 
-		zCObjPresetLib* lib = &CMainFrame::mainframe->presetLib;
-
-		zCClassDef* classDef = pickedVob->GetClassDef();
-		if (classDef->IsScriptedClass())
-		{
-			MessageBox("You can't create presets of scripted objects");
-			return;
-		};
-		if (classDef->IsAbstractClass())
-		{
-			MessageBox("Fatal.Fatal.Fatal\r\nHow does this object of an abstract class could exist?");
-			zERR_FATAL("B: SPC: Object of abstract class found. What went wrong?");
-			return;
-		};
-
-		CString className = classDef->GetClassName_().ToChar();
-		zSTRING presetName;
-		bool ready = false;
-		int result;
-		zCObject* obj;
-		CInputDialog dlg;
-		dlg.name = "Type name of new preset\r\nclass \"" + className + "\"";
-		dlg.ctrl_input = pickedVob->GetVobName().ToChar();
-		do
-		{
-			result = dlg.DoModal();
-			if (result == IDOK)
-			{
-				presetName = dlg.GetInput().GetBuffer(0);
-				obj = lib->GetObjectByName(presetName);
-				ready = (obj == NULL);
-				dlg.name = "Type another name! " + dlg.GetInput() + " is already in use.\r\nclass \"" + className + "\"";
-			}
-			else ready = true;
-
-		} while (!ready);
-
-		if (result == IDOK)
-		{
-			lib->AddPreset(pickedVob, presetName);
-			CMainFrame::mainframe->m_wndPresetLib.LoadPreset(pickedVob->GetClassDef()->className.ToChar());
-		}
+		ogame->GetCameraVob()->SetPositionWorld(vob_pos - cam_vec * (float)500);
 	}
-
-
 
 	void CEditorView::OnDrawStartScreen(CDC* pDC)
 	{
@@ -198,8 +123,6 @@ namespace GOTHIC_ENGINE {
 		theApp.EnableDrawing(false);
 	}
 
-
-	POINT  cur;
 	void CEditorView::OnDraw(CDC* /*pDC*/)
 	{
 		ASSERT(AfxCheckMemory());
@@ -218,8 +141,7 @@ namespace GOTHIC_ENGINE {
 				screen->DrawItems();
 			}
 		}else
-		if(isReady)
-			OnDrawStartScreen(NULL);
+		if(isStartScreen)	OnDrawStartScreen(NULL);
 		ASSERT(AfxCheckMemory());
 	}
 
@@ -227,7 +149,7 @@ namespace GOTHIC_ENGINE {
 	{
 		ClientToScreen(&point);
 		if ((ControllerEvents.CameraMoving && zKeyPressed(KEY_LSHIFT)) || !ControllerEvents.CameraMoving)
-		OnContextMenu(this, point);
+			OnContextMenu(this, point);
 	}
 
 	void CEditorView::OnContextMenu(CWnd* /* pWnd */, CPoint point)
@@ -235,19 +157,39 @@ namespace GOTHIC_ENGINE {
 		theApp.GetContextMenuManager()->ShowPopupMenu(IDR_POPUP_EDIT, point.x, point.y, this, TRUE);
 	}
 
-	void CEditorView::RemoveObject(zCVob* vob)
-	{
-		
-		if (vob == pickedWP)	pickedWP = NULL;
-		if (vob == pickedWP2nd) pickedWP2nd = NULL;
 
-		SelectObject(NULL);
-		CEditorDoc::doc->RemoveVob(vob);
+	//-----------------------------------------------------------------
+	// Object manipulations
+	//=================================================================
+	void CEditorView::OnLButtonDown(UINT nFlags, CPoint point)
+	{
+		if (!world) return;
+		POINT  cur;
+		GetCursorPos(&cur);
+		ScreenToClient(&cur);
+
+		PickSingle();
+
+		zCVob* vob = world->traceRayReport.foundVob;
+
+		if (vob)
+		{
+			ControllerEvents.PickedVob = vob;
+
+			SelectObject(vob);
+		}
+
+		CView::OnLButtonDown(nFlags, point);
+	}
+
+	void CEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
+	{
+		SelectObject(Null);
+		CView::OnLButtonDblClk(nFlags, point);
 	}
 
 	zCObject* CEditorView::CreateNewObject(CString className)
 	{
-		
 		if (className.IsEmpty()) return Null;
 
 		zCClassDef* classDef = zCObject::GetClassDef(className.GetBuffer(0));
@@ -264,10 +206,10 @@ namespace GOTHIC_ENGINE {
 		newvob = dynamic_cast<zCVob*>(obj);
 
 		if (
-			dynamic_cast<zCTrigger*>(newvob) ||
-			dynamic_cast<zCMover*>(newvob) ||
-			dynamic_cast<zCVobWaypoint*>(newvob) ||
-			dynamic_cast<zCVobSpot*>(newvob)
+			dynamic_cast<zCTrigger*>	(newvob)||
+			dynamic_cast<zCMover*>		(newvob)||
+			dynamic_cast<zCVobWaypoint*>(newvob)||
+			dynamic_cast<zCVobSpot*>	(newvob)
 			)
 		{
 			if (!newvob->GetVobName().IsEmpty())
@@ -311,106 +253,62 @@ namespace GOTHIC_ENGINE {
 		return newvob;
 	}
 
-
-
-	void CEditorView::VobGoto(zCVob* vob)
+	void CEditorView::OnNewpreset()
 	{
-		zVEC3 dir = vob->GetAtVectorWorld();
-#ifdef __G1A
-		zVEC3 pos = vob->GetPositionWorld();
-#else
-		zVEC3 pos;  vob->GetPositionWorld(pos);
-#endif
-		zVEC3 vob_pos = vob->GetPositionWorld();
-		zVEC3 cam_vec = ogame->GetCameraVob()->GetAtVectorWorld();
+		zCVob* pickedVob = GetSelectedVob();
+		if (!pickedVob) return;
 
-		ogame->GetCameraVob()->SetPositionWorld(vob_pos - cam_vec * (float)500);
-	}
+		zCObjPresetLib* lib = &CMainFrame::mainframe->presetLib;
 
-
-#ifdef EXPORT_RIBBON
-	typedef BOOL(WINAPI* CMDMSGPROC)(UINT,int,void*,AFX_CMDHANDLERINFO*);
-#endif
-
-	BOOL CEditorView::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
-	{
-#ifdef EXPORT_RIBBON
-		static HMODULE Controler = Null;
-		static CMDMSGPROC CmdMsg = Null;
-		for (int i = 0; i < UnionCore::CPlugin::GetPluginList().GetNumInList(); i++)
+		zCClassDef* classDef = pickedVob->GetClassDef();
+		if (classDef->IsScriptedClass())
 		{
-			Controler = UnionCore::CPlugin::GetPluginList()[i].GetData()->GetModule();
-			CmdMsg = (CMDMSGPROC)GetProcAddress(Controler, "?OnCmdMsg@Gothic_II_Addon@@YGHIHPAXPAUAFX_CMDHANDLERINFO@@@Z");
-			if (CmdMsg)
-				if (CmdMsg(nID, nCode, pExtra, pHandlerInfo))
-					return TRUE;
-		}
-#endif
-		
-		if (settings.OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))
-			return TRUE;
-		if (homeSettings.OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))
-			return TRUE;
-		return CView::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
-	}
-
-
-	void CEditorView::SelectObject(zCVob* vob)
-	{
-		if (!vob) {
-
-			CMainFrame::mainframe->m_wndProperties.SetObject(NULL);
-			ControllerEvents.PickedVob = NULL;
+			MessageBox("You can't create presets of scripted objects");
+			return;
+		};
+		if (classDef->IsAbstractClass())
+		{
+			MessageBox("Fatal.Fatal.Fatal\r\nHow does this object of an abstract class could exist?");
+			zERR_FATAL("B: SPC: Object of abstract class found. What went wrong?");
 			return;
 		};
 
-
-		const zSTRING* sectorName = vob->GetSectorNameVobIsIn();
-
-		if (sectorName)
-			FILEVIEW.SelectItem(VirtualVobTree_Portals::GetInstance().FindTreeItemForVob(vob));
-		else
-			FILEVIEW.SelectItem(VirtualVobTree_Globals::GetInstance().FindTreeItemForVob(vob));
-
-		CMainFrame::mainframe->m_wndProperties.SetObject(vob);
-	}
-
-	void CEditorView::OnLButtonDown(UINT nFlags, CPoint point)
-	{
-		if (!world) return;
-		POINT  cur;
-		GetCursorPos(&cur);
-		ScreenToClient(&cur);
-
-		PickSingle();
-
-		zCVob* vob = world->traceRayReport.foundVob;
-
-		if (vob)
+		CString className = classDef->GetClassName_().ToChar();
+		zSTRING presetName;
+		bool ready = false;
+		int result;
+		zCObject* obj;
+		CInputDialog dlg;
+		dlg.name = "Type name of new preset\r\nclass \"" + className + "\"";
+		dlg.ctrl_input = pickedVob->GetVobName().ToChar();
+		do
 		{
-			ControllerEvents.PickedVob = vob;
+			result = dlg.DoModal();
+			if (result == IDOK)
+			{
+				presetName = dlg.GetInput().GetBuffer(0);
+				obj = lib->GetObjectByName(presetName);
+				ready = (obj == NULL);
+				dlg.name = "Type another name! " + dlg.GetInput() + " is already in use.\r\nclass \"" + className + "\"";
+			}
+			else ready = true;
 
-			SelectObject(vob); //OK_OK
+		} while (!ready);
+
+		if (result == IDOK)
+		{
+			lib->AddPreset(pickedVob, presetName);
+			PRESETLIB.LoadPreset(pickedVob->GetClassDef()->className.ToChar());
 		}
-
-		CView::OnLButtonDown(nFlags, point);
 	}
-
-
-	void CEditorView::OnLButtonDblClk(UINT nFlags, CPoint point)
-	{
-		SelectObject(Null);
-		CView::OnLButtonDblClk(nFlags, point);
-	}
-
 
 	void CEditorView::OnObjInsert()
 	{
 		uString objTypeName = ClassTree.GetItemText(ClassTree.GetSelectedItem());
 
-		bool enabled = (CMainFrame::mainframe->m_wndMeshLib.mode == ITEM) || (!objTypeName.IsEmpty() && objTypeName != "Engine objects" && objTypeName.Search("Virtual"));
+		bool enabled = (MESHLIBDLG.mode == ITEM) || (!objTypeName.IsEmpty() && objTypeName != engineObjects && objTypeName.Search("Virtual"));
 
-		
+
 		zCVob* parent = CEditorDoc::doc->GetParentVob(GetSelectedVob());
 
 		zCVob* newvob = 0;
@@ -418,38 +316,42 @@ namespace GOTHIC_ENGINE {
 		zVEC3 pos = _camera->GetPositionWorld();
 		zVEC3 dir = _camera->GetAtVectorWorld();
 
-		if (CMainFrame::mainframe->m_wndMeshLib.mode == ITEM)
-		{
-			zSTRING itemInst = CMainFrame::mainframe->m_wndMeshLib.meshListBox.GetSelectedMesh();
-			newvob = dynamic_cast<oCObjectFactory*>(zfactory)->CreateItem(parser->GetIndex(itemInst.PickWord(1, ".", ".")));
-			goto ITEM;
-		}
 
-		if (CMainFrame::mainframe->m_wndPresetLib.meshListBox.mode == PRESETS)
+
+		if (PRESETLIB.meshListBox.mode == PRESETS)
 		{
-			Common::cmd << "PRESETS" << Common::endl;
 			zCObject* obj = 0;
-			zSTRING name_of_preset = CMainFrame::mainframe->m_wndPresetLib.meshListBox.GetPreset();
+			zSTRING presetName = PRESETLIB.meshListBox.GetPreset();
 
-			zCObject* refObject = CMainFrame::mainframe->presetLib.GetObjectByName(name_of_preset);
+			zCObject* refObject = CMainFrame::mainframe->presetLib.GetObjectByName(presetName);
 			if (refObject)
 				obj = refObject->CreateCopy();
 			else
+			{
+				OutputError("Wrong preset name, please reselct it.");
 				return;
+			}
+
 			newvob = dynamic_cast<zCVob*>(obj);
-			if (newvob) newvob->SetVobPresetName(name_of_preset);
+			if (newvob) newvob->SetVobPresetName(presetName);
 		}
 
-		if (CMainFrame::mainframe->m_wndPresetLib.meshListBox.mode == MESHLIB)
+		if (PRESETLIB.meshListBox.mode == MESHLIB)
 		{
-			Common::cmd << "MESHLIB" << Common::endl;
-			if (CMainFrame::mainframe->m_wndMeshLib.meshListBox.GetCurSel() != LB_ERR)
-				visualName = CMainFrame::mainframe->m_wndMeshLib.meshListBox.GetSelectedMesh().ToChar();
+			if (MESHLIBDLG.meshListBox.GetCurSel() != LB_ERR)
+				visualName = MESHLIBDLG.meshListBox.GetSelectedMesh().ToChar();
 			else
-				visualName = "INVALID_SOURCE_FILE.3DS";
+				visualName = invalidSrcFile;
 			newvob = CreateNewVob(CreateNewObject(ClassTree.GetItemText(ClassTree.GetSelectedItem())));
 		}
-	ITEM:
+
+		if (MESHLIBDLG.mode == ITEM)
+		{
+			zSTRING itemInst = MESHLIBDLG.meshListBox.GetSelectedMesh();
+			newvob = dynamic_cast<oCObjectFactory*>(zfactory)->CreateItem(parser->GetIndex(itemInst.PickWord(1, ".", ".")));
+			if (!newvob) return;
+		}
+
 		if (newvob)
 		{
 			pos = pos + dir * 200;
@@ -475,35 +377,92 @@ namespace GOTHIC_ENGINE {
 
 		if (newvob && dynamic_cast<zCVob*>(newvob))
 		{
+			CEditorView::view->SelectObject(newvob);
 
 			if (dynamic_cast<zCTriggerBase*>(newvob) || dynamic_cast<zCZone*>(newvob))
 			{
 				if (!newvob->visual)
 					newvob->SetVisual(visualName.ToChar());
-				CEditorView::view->SelectObject(newvob);//OK_**
 				return;
 			}
 
 
-			if (dynamic_cast<zCVobWaypoint*>(newvob) ||
-				dynamic_cast<zCVobSpot*>(newvob) ||
-				dynamic_cast<zCVobStartpoint*>(newvob) ||
-				dynamic_cast<oCItem*>(newvob) ||
-				//			dynamic_cast<zCEffect*>(newvob) ||
+			if (dynamic_cast<zCVobWaypoint*>	(newvob) ||
+				dynamic_cast<zCVobSpot*>		(newvob) ||
+				dynamic_cast<zCVobStartpoint*>	(newvob) ||
+				dynamic_cast<oCItem*>			(newvob) ||
 				dynamic_cast<zCCamTrj_KeyFrame*>(newvob) ||
-				dynamic_cast<zCCSCamera*>(newvob) ||
-				dynamic_cast<zCVobLight*>(newvob))
+				dynamic_cast<zCCSCamera*>		(newvob) ||
+				dynamic_cast<zCVobLight*>		(newvob))
 			{
-				CEditorView::view->SelectObject(newvob);//OK_**
 				zRELEASE(newvob);
-
 				return;
 			}
 
 			if (!newvob->visual)
 				newvob->SetVisual(visualName.ToChar());
-			CEditorView::view->SelectObject(newvob);//OK_**
 		}
+	}
+
+	void CEditorView::SelectObject(zCVob* vob)
+	{
+		if (!vob) {
+
+			CMainFrame::mainframe->m_wndProperties.SetObject(NULL);
+			ControllerEvents.PickedVob = NULL;
+			return;
+		};
+
+
+		const zSTRING* sectorName = vob->GetSectorNameVobIsIn();
+
+		if (sectorName)
+			FILEVIEW.SelectItem(VirtualVobTree_Portals::GetInstance().FindTreeItemForVob(vob));
+		else
+			FILEVIEW.SelectItem(VirtualVobTree_Globals::GetInstance().FindTreeItemForVob(vob));
+
+		CMainFrame::mainframe->m_wndProperties.SetObject(vob);
+	}
+
+	void CEditorView::RemoveObject(zCVob* vob)
+	{
+
+		if (vob == pickedWP)	pickedWP = NULL;
+		if (vob == pickedWP2nd) pickedWP2nd = NULL;
+
+		SelectObject(NULL);
+		CEditorDoc::doc->RemoveVob(vob);
+	}
+
+
+
+	//-----------------------------------------------------------------
+	// Message handling & Export Ribbon interface
+	//=================================================================
+#ifdef EXPORT_RIBBON
+	typedef BOOL(WINAPI* CMDMSGPROC)(UINT,int,void*,AFX_CMDHANDLERINFO*);
+#endif
+
+	BOOL CEditorView::OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
+	{
+#ifdef EXPORT_RIBBON
+		static HMODULE Controler = Null;
+		static CMDMSGPROC CmdMsg = Null;
+		for (int i = 0; i < UnionCore::CPlugin::GetPluginList().GetNumInList(); i++)
+		{
+			Controler = UnionCore::CPlugin::GetPluginList()[i].GetData()->GetModule();
+			CmdMsg = (CMDMSGPROC)GetProcAddress(Controler, "?OnCmdMsg@Gothic_II_Addon@@YGHIHPAXPAUAFX_CMDHANDLERINFO@@@Z");
+			if (CmdMsg)
+				if (CmdMsg(nID, nCode, pExtra, pHandlerInfo))
+					return TRUE;
+		}
+#endif
+		
+		if (settings.OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))
+			return TRUE;
+		if (homeSettings.OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))
+			return TRUE;
+		return CView::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 	}
 }
 

@@ -5,6 +5,8 @@
 
 namespace Gothic_I_Classic {
 
+
+#include "zVisual.h"
   enum zTVobType {
     zVOB_TYPE_NORMAL,
     zVOB_TYPE_LIGHT,

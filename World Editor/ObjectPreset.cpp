@@ -254,7 +254,7 @@ namespace GOTHIC_ENGINE {
 			preset->obj = obj->CreateCopy();
 		else
 		{
-			OutputDebug("presetlib:: PIIDOR");
+			OutputError("PresetLib: bad obj pointer...");
 			return FALSE;
 		}
 		Insert(preset);

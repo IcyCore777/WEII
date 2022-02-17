@@ -112,9 +112,10 @@ namespace GOTHIC_ENGINE {
 	void COutputWnd::UpdateFonts()
 	{
 		
-		m_wndOutputBuild.SetFont(&afxGlobalData.fontRegular);
-		m_wndOutputDebug.SetFont(&afxGlobalData.fontRegular);
-		m_wndOutputFind.SetFont(&afxGlobalData.fontRegular);
+		m_wndOutputBuild.SetFont(&afxGlobalData.fontTooltip);
+		m_wndOutputDebug.SetFont(&afxGlobalData.fontTooltip);
+		m_wndOutputFind.SetFont(&afxGlobalData.fontTooltip);
+		m_wndOutputSpy.SetFont(&afxGlobalData.fontTooltip);
 	}
 
 

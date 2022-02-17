@@ -6,19 +6,13 @@ namespace GOTHIC_ENGINE {
 
 	void CGameManager::Init_Union(HWND& wnd)
 	{
-
-
 		DestroyWindow(wnd);
 		CoInitializeEx(NULL, COINIT_APARTMENTTHREADED | COINIT_DISABLE_OLE1DDE);
 		AFX_MANAGE_STATE(AfxGetStaticModuleState());
 
-		Common::cmd << "Starting" << Common::endl;
 		theApp.bReady = true;
-		Common::cmd << "Restarting MFC" << Common::endl;
 		theApp.InitInstance();
-		Common::cmd << "theApp.InitInstance();" << Common::endl;
 		theApp.Process();
-		Common::cmd << "theApp.Process();" << Common::endl;
 	}
 
 
@@ -26,7 +20,6 @@ namespace GOTHIC_ENGINE {
 
 	void CGameManager::InitGothic()
 	{
-		
 		THISCALL(Hook_CGameManager_Init)(CEditorView::view->m_hWnd);
 		ControllerEvents.mainframe = CMainFrame::mainframe->m_hWnd;
 		
@@ -35,7 +28,7 @@ namespace GOTHIC_ENGINE {
 #endif
 		ControllerEvents.PickMode = zPM_VOBS;
 		ControllerEvents.GizmoScale = 3;
-		Common::cmd << "Main windows replaced" << Common::endl;
+
 		ogame->game_frameinfo = TRUE;
 		if (dontStartGame) return;
 		gameSession->game_testmode = TRUE;
@@ -52,15 +45,10 @@ namespace GOTHIC_ENGINE {
 		OutputBuild("Build class-tree");
 		CEditorView::view->homeSettings.InitData();
 		OutputBuild("Init home page");
-		OutputBuild("Load presets");
 		CMainFrame::mainframe->presetLib.Load();
-		OutputBuild("Presets loaded!");
-
 		OutputBuild("Loading settings ");
 		CEditorView::view->settings.InitData();
-		
-		CEditorView::view->isReady = TRUE;
-
+		CEditorView::view->isStartScreen = TRUE;
 		ogame->UpdateScreenResolution();
 		OutputBuild("Update screen res");
 	}

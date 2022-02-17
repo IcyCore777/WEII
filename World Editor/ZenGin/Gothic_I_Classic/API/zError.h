@@ -5,6 +5,28 @@
 
 namespace Gothic_I_Classic {
 
+    const int zERR_NONE = 0;
+    const int zERR_NO = 1;
+    const int zERR_UNKNOWN = 2;
+    const int zERR_LV_NONE = -1;
+    const int zERR_LV_SECTION = 1;
+    const int zERR_LV_SUBSECTION = 3;
+    const int zERR_LV_LOADSECTION = 2;
+    const int zERR_LV_LOADFILE1 = 3;
+    const int zERR_LV_LOADFILE2 = 4;
+    const int zERR_LV_LOADFILE3 = 5;
+    const int zERR_LV_ROUTINE1 = 4;
+    const int zERR_LV_ROUTINE2 = 5;
+    const int zERR_LV_ROUTINE3 = 6;
+    const int zERR_LV_NEWOBJECT = 8;
+    const int zERR_LV_FUNCENTER = 9;
+    const int zERR_LV_FUNCLEAVE = 10;
+    const int zERR_LV_DETAIL = 10;
+    const int zERR_LV_IMPORTANT = 1;
+    const int zERR_LV_DEFAULT = 5;
+
+
+
   enum zERROR_TYPE {
     zERR_TYPE_OK,
     zERR_TYPE_INFO,

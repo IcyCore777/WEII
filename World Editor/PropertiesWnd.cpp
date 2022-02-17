@@ -6,6 +6,7 @@ namespace GOTHIC_ENGINE {
 	{
 		m_nComboHeight = 0;
 		vob = Null;
+		arch = Null;
 	}
 
 	CPropertiesWnd::~CPropertiesWnd()
@@ -174,7 +175,7 @@ namespace GOTHIC_ENGINE {
 	void CPropertiesWnd::SetPropListFont()
 	{
 		
-		//::DeleteObject(m_fntPropList.Detach());
+		::DeleteObject(m_fntPropList.Detach());
 
 		LOGFONT lf;
 		afxGlobalData.fontRegular.GetLogFont(&lf);

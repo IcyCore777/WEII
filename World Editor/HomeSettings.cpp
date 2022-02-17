@@ -299,7 +299,6 @@ namespace GOTHIC_ENGINE {
 
 	void CHomeSettings::OnDelete()
 	{
-		
 		if (!cuttedVobs.IsEmpty())cuttedVobs.Clear();
 
 		Common::Array<zCVob*> selVobs = ControllerEvents.SelectedVobs;
@@ -307,14 +306,11 @@ namespace GOTHIC_ENGINE {
 			if (selVobs[i]) CEditorView::view->RemoveObject(selVobs[i]);
 
 		ControllerEvents.ClearSelection();
-
-
 	}
 
 
 	void CHomeSettings::SetMoveMode(zEVobMotionMode newmode)
 	{
-		
 		switch (newmode)
 		{
 		case zMM_ROTATE:	ControllerEvents.MotionMode = zMM_ROTATE;	ControllerEvents.GizmoScale = 4; 	break;
@@ -329,7 +325,6 @@ namespace GOTHIC_ENGINE {
 
 	void CHomeSettings::OnUpdatePaste(CCmdUI* pCmdUI)
 	{
-		
 		UICheck
 			pCmdUI->Enable((BOOL)copyBuffer || cuttedVobs.GetNum());
 	}

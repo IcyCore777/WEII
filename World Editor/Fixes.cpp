@@ -169,13 +169,14 @@ namespace GOTHIC_ENGINE {
 		};
 
 
-		UpdateVisualDependencies(TRUE);
-
-
+		
 #ifdef __G2A
+		UpdateVisualDependencies(TRUE);
 		const zREAL VOB_IGNORE_MIN_EXTEND = 10;
 		zREAL minExtend = GetBBox3DWorld().GetMinExtent();
 		if (minExtend > VOB_IGNORE_MIN_EXTEND) m_zBias = 0;
+#else
+		UpdateVisualDependencies();
 #endif
 	}
 #endif // !__G1A
