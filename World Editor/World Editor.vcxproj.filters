@@ -250,12 +250,6 @@
     <Filter Include="Plugin\MFC\Source\Dialogs">
       <UniqueIdentifier>{701d915b-6c7d-457e-b377-cbfeca45aa79}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Plugin\MFC\include\MeshLib">
-      <UniqueIdentifier>{4e6fa2bc-8308-41fc-937a-2eb839d322fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Plugin\MFC\include\MeshLib\PresetLib">
-      <UniqueIdentifier>{52276790-d6d1-4481-976a-9f41d2e8df8f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Plugin\MFC\Source\Exports">
       <UniqueIdentifier>{444c64de-ade7-42c4-901d-28a0497ce973}</UniqueIdentifier>
     </Filter>
@@ -264,6 +258,12 @@
     </Filter>
     <Filter Include="Plugin\MFC\Source\Settings">
       <UniqueIdentifier>{d972f1ec-fc52-4a4a-9faf-8d0e48563b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin\MFC\Source\MeshLib">
+      <UniqueIdentifier>{4e6fa2bc-8308-41fc-937a-2eb839d322fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugin\MFC\Source\MeshLib\PresetLib">
+      <UniqueIdentifier>{52276790-d6d1-4481-976a-9f41d2e8df8f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -2904,10 +2904,10 @@
       <Filter>Plugin\MFC\Source\Dialogs</Filter>
     </ClInclude>
     <ClInclude Include="MeshLibParser.h">
-      <Filter>Plugin\MFC\include\MeshLib</Filter>
+      <Filter>Plugin\MFC\Source\MeshLib</Filter>
     </ClInclude>
     <ClInclude Include="MeshLibParser.cpp">
-      <Filter>Plugin\MFC\include\MeshLib</Filter>
+      <Filter>Plugin\MFC\Source\MeshLib</Filter>
     </ClInclude>
     <ClInclude Include="ColoredListBox.cpp">
       <Filter>Plugin\MFC\Source\Controls</Filter>
@@ -2919,25 +2919,25 @@
       <Filter>Plugin\MFC\Source</Filter>
     </ClInclude>
     <ClInclude Include="MeshLib.cpp">
-      <Filter>Plugin\MFC\include\MeshLib</Filter>
+      <Filter>Plugin\MFC\Source\MeshLib</Filter>
     </ClInclude>
     <ClInclude Include="MeshLib.h">
-      <Filter>Plugin\MFC\include\MeshLib</Filter>
+      <Filter>Plugin\MFC\Source\MeshLib</Filter>
     </ClInclude>
     <ClInclude Include="ObjectPreset.cpp">
-      <Filter>Plugin\MFC\include\MeshLib\PresetLib</Filter>
+      <Filter>Plugin\MFC\Source\MeshLib\PresetLib</Filter>
     </ClInclude>
     <ClInclude Include="ObjectPreset.h">
-      <Filter>Plugin\MFC\include\MeshLib\PresetLib</Filter>
+      <Filter>Plugin\MFC\Source\MeshLib\PresetLib</Filter>
     </ClInclude>
     <ClInclude Include="MeshLibPane.cpp">
-      <Filter>Plugin\MFC\include\MeshLib</Filter>
+      <Filter>Plugin\MFC\Source\MeshLib</Filter>
     </ClInclude>
     <ClInclude Include="MeshLibPane.h">
-      <Filter>Plugin\MFC\include\MeshLib</Filter>
+      <Filter>Plugin\MFC\Source\MeshLib</Filter>
     </ClInclude>
     <ClInclude Include="PresetsPane.cpp">
-      <Filter>Plugin\MFC\include\MeshLib\PresetLib</Filter>
+      <Filter>Plugin\MFC\Source\MeshLib\PresetLib</Filter>
     </ClInclude>
     <ClInclude Include="CProgressBar.h">
       <Filter>Plugin\MFC\Source\Controls</Filter>

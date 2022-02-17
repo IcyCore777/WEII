@@ -102,7 +102,7 @@ namespace GOTHIC_ENGINE {
 		AfxEnableControlContainer();
 		EnableTaskbarInteraction(FALSE);
 		SetRegistryKey(_T("Gothic 2 World Editor"));
-		LoadStdProfileSettings(4);
+		LoadStdProfileSettings(5);
 		   
 
 		InitContextMenuManager();

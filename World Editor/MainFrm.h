@@ -46,9 +46,7 @@ namespace GOTHIC_ENGINE {
 		afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
 		afx_msg void OnApplicationLook(UINT id);
 		afx_msg void OnUpdateApplicationLook(CCmdUI* pCmdUI);
-		afx_msg void OnFilePrint();
-		afx_msg void OnFilePrintPreview();
-		afx_msg void OnUpdateFilePrintPreview(CCmdUI* pCmdUI);
+
 		afx_msg void OnSettingChange(UINT uFlags, LPCTSTR lpszSection);
 		DECLARE_MESSAGE_MAP()
 	public:
