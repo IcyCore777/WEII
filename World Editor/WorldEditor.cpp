@@ -172,6 +172,8 @@ namespace GOTHIC_ENGINE {
 		WriteProfileInt(strRes, strHeight, viewy);
 		WriteProfileInt(strRes, strWidth, viewx);
 		AfxOleTerm(FALSE);
+		if (m_pRecentFileList != NULL)
+			m_pRecentFileList->WriteList();
 		return CWinAppEx::ExitInstance();
 	}
 
