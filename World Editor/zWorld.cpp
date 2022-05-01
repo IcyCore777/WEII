@@ -15,7 +15,7 @@ namespace GOTHIC_ENGINE {
     }
 
 
-    HOOK Hook_zCVob_ThisVobAddedToWorld PATCH(&zCVob::ThisVobAddedToWorld, &zCVob::ThisVobAddedToWorld_Union);
+    /*HOOK Hook_zCVob_ThisVobAddedToWorld PATCH(&zCVob::ThisVobAddedToWorld, &zCVob::ThisVobAddedToWorld_Union);
 
     void zCVob::ThisVobAddedToWorld_Union(zCWorld* worl)
     {
@@ -25,7 +25,7 @@ namespace GOTHIC_ENGINE {
             return;
         CMainFrame::mainframe->m_wndVobList.RedrawWindow();
         InsertVobToVirtualVobTree(this);
-    }
+    }*/
 
 
 
@@ -39,14 +39,14 @@ namespace GOTHIC_ENGINE {
 
 
 
-    HOOK Hook_zCVob_ThisVobRemovedFromWorld PATCH(&zCVob::ThisVobRemovedFromWorld, &zCVob::ThisVobRemovedFromWorld_Union);
+    //HOOK Hook_zCVob_ThisVobRemovedFromWorld PATCH(&zCVob::ThisVobRemovedFromWorld, &zCVob::ThisVobRemovedFromWorld_Union);
 
-    void zCVob::ThisVobRemovedFromWorld_Union(zCWorld* worl)
-    {
+    //void zCVob::ThisVobRemovedFromWorld_Union(zCWorld* worl)
+    //{
 
-        if (CEditorDoc::doc->bWorldLoaded)
-            RemoveVobToVirtualVobTree(this); //<<<<< 
+    //    if (CEditorDoc::doc->bWorldLoaded)
+    //        RemoveVobToVirtualVobTree(this); //<<<<< 
 
-        THISCALL(Hook_zCVob_ThisVobRemovedFromWorld)(worl);
-    }
+    //    THISCALL(Hook_zCVob_ThisVobRemovedFromWorld)(worl);
+    //}
 }

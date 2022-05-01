@@ -467,10 +467,11 @@ namespace GOTHIC_ENGINE {
 			CEditorView::view->world = Null;
 		}
 	}
-
+	extern BOOL renderPfx;
 	void CEditorDoc::OnTest()
 	{
-		MessageBox(0, "TEST TEST TEST", 0, 0);
+
+		renderPfx = TRUE;
 	}
 }
 

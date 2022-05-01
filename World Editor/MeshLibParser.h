@@ -25,5 +25,6 @@ namespace GOTHIC_ENGINE {
 		zTMeshRenderer();
 		void SetVisual(zSTRING, int id);
 		void Render();
+		void SetPos(int x, int y);
 	};
 }

@@ -61,3 +61,4 @@ void				SetCastDynShadow(const zTDynShadowType b) { castDynShadow = b; };
 zTDynShadowType		GetCastDynShadow() const { return zTDynShadowType(castDynShadow); };
 zBOOL				GetInMovement() const { return (isInMovementMode != zVOB_MOVE_MODE_NOTINBLOCK); };
 
+void RenderPFX(zCWorld* i_wld, zCViewBase* viewport, zREAL addon = 0.0f);

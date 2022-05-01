@@ -1045,6 +1045,14 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="PFXManager.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PFXManager.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Plugin.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="ZenGin\Gothic_II_Addon\ClassDeclarators_G2A.cpp" />
@@ -1084,6 +1092,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="zERROR.cpp">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="zVobRnd.cpp">
       <SubType>
       </SubType>
     </ClInclude>

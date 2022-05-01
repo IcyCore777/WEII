@@ -25,6 +25,8 @@
 #include "UnionSource.cpp"
 #include "memhook.cpp"
 #include "WorldEditor.cpp"
+#include "zVobRnd.cpp"
+#include "PFXManager.cpp"
 #include "WorldEditorDoc.cpp"
 #include "WorldEditorView.cpp"
 #include "CGameManager.cpp"

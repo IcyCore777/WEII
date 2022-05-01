@@ -31,12 +31,12 @@ namespace GOTHIC_ENGINE {
 	IMPLEMENT_DYNCREATE(CEditorView, CView)
 
 	BEGIN_MESSAGE_MAP(CEditorView, CView)
-
 		ON_WM_CONTEXTMENU()
 		ON_WM_RBUTTONUP()
 		ON_WM_LBUTTONDOWN()
 		ON_WM_LBUTTONDBLCLK()
 		ON_COMMAND(ID_OBJ_INSERT, &CEditorView::OnObjInsert)
+		ON_UPDATE_COMMAND_UI(ID_OBJ_INSERT, &CEditorView::OnUpdateObjInsert)
 	END_MESSAGE_MAP()
 
 	CEditorView::CEditorView() 
@@ -58,8 +58,21 @@ namespace GOTHIC_ENGINE {
 		return CView::PreCreateWindow(cs);
 	}
 
+	BOOL vix = FALSE;
+
+	void RenderPFX()
+	{
+		static PFXManager pfxManager;
+		if (!vix)
+		{
+			pfxManager.RenderPFX("MFX_FIREBALL_INIT");
+		}
+	
+		pfxManager.Loop();
+	}
 
 
+	BOOL renderPfx = FALSE;
 	//-----------------------------------------------------------------
 	// View operations
 	//=================================================================
@@ -77,7 +90,7 @@ namespace GOTHIC_ENGINE {
 		ogame->GetCameraVob()->SetPositionWorld(vob_pos - cam_vec * (float)500);
 	}
 
-	void CEditorView::OnDrawStartScreen(CDC* pDC)
+	void CEditorView::OnDrawStartScreen()
 	{
 		RECT rect;
 		CClientDC ClientDC(this);
@@ -97,7 +110,7 @@ namespace GOTHIC_ENGINE {
 
 
 		ClientDC.SetTextColor(RGB(196, 250, 250));
-		ClientDC.TextOut(40, line * height, "Copyright © " + CString(SPC_YEAR_START) + "-" + CString(SPC_YEAR_END) + " by " + CString(SPC_COMPANY_NAME)); line++;
+		ClientDC.TextOut(40, line * height, "Copyright © " + CString(SPC_YEAR_START) + "-" + CString(SPC_COMPILE_DATE) + " by " + CString(SPC_COMPANY_NAME)); line++;
 		ClientDC.TextOut(40, line * height, "developed by " + CString(SPC_AUTHOR_NAMES)); line++;
 
 		line += 2;
@@ -123,16 +136,18 @@ namespace GOTHIC_ENGINE {
 		theApp.EnableDrawing(false);
 	}
 
-	void CEditorView::OnDraw(CDC* /*pDC*/)
+	void CEditorView::OnDraw(CDC*)
 	{
 		ASSERT(AfxCheckMemory());
-
+		if (renderPfx) RenderPFX();
 		if (gameMan && world && zrenderer && gameMan->gameSession)
 		{
 			zCView::GetInput();
 
 			if (zrenderer && gameMan->gameSession)
 			{
+				
+
 				GetCursorPos(&cur);
 				gameMan->gameSession->Render();
 				ControllerEvents.CursorPosition = PickCursor(cur);
@@ -140,8 +155,8 @@ namespace GOTHIC_ENGINE {
 
 				screen->DrawItems();
 			}
-		}else
-		if(isStartScreen)	OnDrawStartScreen(NULL);
+		}//else
+		//if(isStartScreen)	OnDrawStartScreen();
 		ASSERT(AfxCheckMemory());
 	}
 
@@ -175,7 +190,6 @@ namespace GOTHIC_ENGINE {
 		if (vob)
 		{
 			ControllerEvents.PickedVob = vob;
-
 			SelectObject(vob);
 		}
 
@@ -434,7 +448,13 @@ namespace GOTHIC_ENGINE {
 		CEditorDoc::doc->RemoveVob(vob);
 	}
 
-
+	void CEditorView::OnUpdateObjInsert(CCmdUI* pCmdUI)
+	{
+		if (!CEditorView::view->world)
+			pCmdUI->Enable(FALSE);
+		else
+			pCmdUI->Enable(TRUE);
+	}
 
 	//-----------------------------------------------------------------
 	// Message handling & Export Ribbon interface
@@ -465,5 +485,8 @@ namespace GOTHIC_ENGINE {
 		return CView::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 	}
 }
+
+
+
 
 

@@ -2996,6 +2996,15 @@
     <ClInclude Include="Settings.cpp">
       <Filter>Plugin\MFC\Source\Settings</Filter>
     </ClInclude>
+    <ClInclude Include="zVobRnd.cpp">
+      <Filter>Plugin\MFC\Source\MeshLib</Filter>
+    </ClInclude>
+    <ClInclude Include="PFXManager.cpp">
+      <Filter>Plugin\MFC\Source\MeshLib</Filter>
+    </ClInclude>
+    <ClInclude Include="PFXManager.h">
+      <Filter>Plugin\MFC\Source\MeshLib</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".build_settings.inl">

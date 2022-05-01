@@ -25,6 +25,7 @@
 #include "WorldEditor.h"
 #include "FileView.h"
 #include "MainFrm.h"
+#include "PFXManager.h"
 #include "VobTree.h"
 #include "WorldEditorDoc.h"
 #include "WorldEditorView.h"

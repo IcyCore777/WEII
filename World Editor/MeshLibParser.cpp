@@ -308,6 +308,10 @@ namespace GOTHIC_ENGINE {
 		world->AddVob(camera->connectedVob);
 		camera->connectedVob->Release();
 	}
+	void  zTMeshRenderer::SetPos(int x, int y)
+	{
+		view->SetPos(x, y);
+	}
 
 	void zTMeshRenderer::SetVisual(zSTRING fileName, int id)
 	{
@@ -315,15 +319,16 @@ namespace GOTHIC_ENGINE {
 		vob = new zCVob();
 		world->AddVob(vob);
 
-		//if (id == PFX)
-		//{
-		//	pfx = new zCParticleFX();
-		//	_ASSERT(pfx);
-		//	pfx->SetAndStartEmitter(fileName.PickWord(1, ".", "."));
-		//	vob->SetVisual(pfx);
+		if (id == 32)
+		{
+			pfx = new zCParticleFX();
+			_ASSERT(pfx);
+			pfx->SetAndStartEmitter(fileName,FALSE);
+			vob->SetVisual(pfx);
 
-		//	zRELEASE(pfx)
-		//}
+			zRELEASE(pfx)
+				return;
+		}
 
 		if (id == MSH || id == ASC || id == MDS || id == MMS)
 		{

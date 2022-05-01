@@ -146,7 +146,7 @@ namespace GOTHIC_ENGINE {
 				if (object->visual)
 					AddIcon(uString(((object->GetVisual()) ? object->GetVisual()->GetVisualName() : "") + ".jpg").ToChar(), presetname);
 				else
-					AddIcon("ADDON_CANYONOBJECT_SIGN_01.3DS.JPG", presetname);
+					AddIcon("INVALID_SOURCE_FILE.3DS.JPG", presetname);
 
 			}
 		};
@@ -333,7 +333,7 @@ namespace GOTHIC_ENGINE {
 			return uString(*iconList[selIcon].GetValue());
 		}
 		else
-			return uString("BOX2.3DS");
+			return uString("INVALID_SOURCE_FILE.3DS");
 	}
 
 
@@ -367,7 +367,6 @@ namespace GOTHIC_ENGINE {
 
 	void CMeshListBox::OnLButtonDblClk(UINT nFlags, CPoint point)
 	{
-		
 		//WorldCheck
 		CEditorView::view->OnObjInsert();
 		CListBox::OnLButtonDblClk(nFlags, point);

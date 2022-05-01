@@ -27,7 +27,7 @@ namespace GOTHIC_ENGINE {
 		virtual void	OnDraw(CDC* pDC);
 		virtual BOOL	PreCreateWindow(CREATESTRUCT& cs);
 		void			OnNewpreset();
-		void			OnDrawStartScreen(CDC* pDC);
+		void			OnDrawStartScreen();
 		void			VobGoto(zCVob* vob);
 		afx_msg void	OnLButtonDown(UINT nFlags, CPoint point);
 		afx_msg void	OnLButtonDblClk(UINT nFlags, CPoint point);
@@ -41,6 +41,7 @@ namespace GOTHIC_ENGINE {
 		DECLARE_MESSAGE_MAP()
 	public:
 		virtual BOOL OnCmdMsg(UINT nID, int nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo);
+		afx_msg void OnUpdateObjInsert(CCmdUI* pCmdUI);
 	};
 
 #ifndef _DEBUG 
