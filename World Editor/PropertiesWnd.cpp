@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	CPropertiesWnd::CPropertiesWnd() 
 	{
 		m_nComboHeight = 0;
@@ -424,5 +424,5 @@ namespace GOTHIC_ENGINE {
 		arch->Close();
 		zRELEASE(arch);
 	}
-}
+
 

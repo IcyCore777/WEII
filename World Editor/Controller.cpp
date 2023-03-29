@@ -1,7 +1,8 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+
+using namespace GOTHIC_ENGINE;
 
 	//Pick 3D object
 	void PickSingle()
@@ -48,4 +49,3 @@ namespace GOTHIC_ENGINE {
 	}
 	
 	AFX_API_EXPORT zTWE_ControllerEvents ControllerEvents;
-}

@@ -2,7 +2,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	// CMainFrame
 	CMainFrame* CMainFrame::mainframe = Null;
 
@@ -407,14 +407,18 @@ namespace GOTHIC_ENGINE {
 		oldY = y;
 	}
 
-}
 
-void GOTHIC_ENGINE::CMainFrame::OnDestroy()
-{
-	
-	zErrReportDummy = TRUE;
-	presetLib.Save();
-	CFrameWndEx::OnDestroy();
-	gameMan->Done();
-	gameMan->GameDone();
-}
+
+	void CMainFrame::OnDestroy()
+	{
+
+		zErrReportDummy = TRUE;
+		presetLib.Save();
+		CFrameWndEx::OnDestroy();
+		gameMan->Done();
+		gameMan->GameDone();
+	}
+
+
+
+

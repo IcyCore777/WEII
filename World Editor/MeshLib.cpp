@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	const int TEX_PREVIEW_SIZE = 64;
 
 	CMeshListBox::CMeshListBox()
@@ -372,4 +372,3 @@ namespace GOTHIC_ENGINE {
 		CListBox::OnLButtonDblClk(nFlags, point);
 	}
 
-}

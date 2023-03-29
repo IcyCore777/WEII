@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 
 	CViewTree::CViewTree() 
 	{
@@ -84,4 +84,3 @@ namespace GOTHIC_ENGINE {
 		CMainFrame::mainframe->m_wndPresetLib.LoadPreset(ClassTree.GetItemText(ClassTree.GetSelectedItem()));
 	}
 
-}

@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 
 	class CMainFrame : public CFrameWndEx
 	{
@@ -52,4 +52,3 @@ namespace GOTHIC_ENGINE {
 	public:
 		afx_msg void OnDestroy();
 	};
-}

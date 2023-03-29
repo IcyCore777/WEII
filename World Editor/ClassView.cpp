@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	class CClassViewMenuButton : public CMFCToolBarMenuButton
 	{
 		
@@ -356,4 +356,3 @@ namespace GOTHIC_ENGINE {
 		m_wndToolBar.LoadBitmap(theApp.m_bHiColorIcons ? IDB_SORT_24 : IDR_SORT, 0, 0, TRUE /* Заблокирован */);
 	}
 
-}

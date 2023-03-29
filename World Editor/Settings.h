@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	class CSettings : public CCmdTarget
 	{
 	private:
@@ -29,4 +29,3 @@ namespace GOTHIC_ENGINE {
 		afx_msg void		OnIgnorepfx();
 		DECLARE_MESSAGE_MAP()
 	};
-}

@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	// Add your code here . . .
 
 	void PFXManager::Loop()
@@ -85,4 +85,3 @@ namespace GOTHIC_ENGINE {
 
 		}
 	}
-}

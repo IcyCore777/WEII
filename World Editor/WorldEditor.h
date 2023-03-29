@@ -3,7 +3,7 @@
 #include "resource.h"
 
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 
 	class CEditorApp : public CWinAppEx
 	{
@@ -31,5 +31,3 @@ namespace GOTHIC_ENGINE {
 	};
 
 	extern CEditorApp theApp;
-
-}

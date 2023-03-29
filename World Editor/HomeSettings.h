@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	enum zEVobMotionMode;
 
 	class  CHomeSettings : public CCmdTarget
@@ -64,4 +64,3 @@ namespace GOTHIC_ENGINE {
 		afx_msg void OnUpdateFindvobvis(CCmdUI* pCmdUI);
 	};
 
-}

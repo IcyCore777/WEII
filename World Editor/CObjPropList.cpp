@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	zVEC3 GetRgb(zSTRING color);
 	zVEC3 String2Vec3(const zSTRING& s);
 	COLORREF GetColorRef(zSTRING str);
@@ -397,4 +397,3 @@ namespace GOTHIC_ENGINE {
 		return 0;
 	};
 
-}

@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	struct Group {
 		uString			Name;
 		uArray<uString> FileNames;
@@ -27,4 +27,3 @@ namespace GOTHIC_ENGINE {
 		void Render();
 		void SetPos(int x, int y);
 	};
-}

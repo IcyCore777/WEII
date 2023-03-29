@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	class CFileViewToolBar : public CMFCToolBar
 	{
 		virtual void OnUpdateCmdUI(CFrameWnd* /*pTarget*/, BOOL bDisableIfNoHndler)
@@ -49,4 +49,3 @@ namespace GOTHIC_ENGINE {
 
 		DECLARE_MESSAGE_MAP()
 	};
-}

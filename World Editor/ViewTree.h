@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 #define ClassTree				CMainFrame::mainframe->m_wndClassView.m_wndClassView
 	class CViewTree : public CTreeCtrl
 	{
@@ -25,5 +25,3 @@ namespace GOTHIC_ENGINE {
 		afx_msg void OnNMDblclk(NMHDR* pNMHDR, LRESULT* pResult);
 		afx_msg void OnTvnSelchanged(NMHDR* pNMHDR, LRESULT* pResult);
 	};
-
-}

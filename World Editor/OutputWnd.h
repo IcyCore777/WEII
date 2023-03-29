@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 
 	class COutputList : public CListBox
 	{
@@ -60,4 +60,3 @@ namespace GOTHIC_ENGINE {
 #define OutputDebug(str)		CMainFrame::mainframe->m_wndOutput.m_wndOutputDebug.SetTopIndex(CMainFrame::mainframe->m_wndOutput.m_wndOutputDebug.AddString(str,RGB(0,255,0)))
 #define OutputError(str)		CMainFrame::mainframe->m_wndOutput.m_wndOutputDebug.SetTopIndex(CMainFrame::mainframe->m_wndOutput.m_wndOutputDebug.AddString(str,RGB(255,0,0)))
 #define OutputWarning(str)		CMainFrame::mainframe->m_wndOutput.m_wndOutputDebug.SetTopIndex(CMainFrame::mainframe->m_wndOutput.m_wndOutputDebug.AddString(str,RGB(255,180,0)))
-}

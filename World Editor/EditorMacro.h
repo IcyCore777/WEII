@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 #define UICheck					if(!CEditorDoc::doc->bWorldLoaded) {pCmdUI->Enable(FALSE); return;}
 #define CheckSel 				if (ControllerEvents.SelectedVobs.GetNum() == 0) pCmdUI->Enable(FALSE);	else pCmdUI->Enable();
 #define _camera					ogame->camVob
@@ -17,4 +17,3 @@ namespace GOTHIC_ENGINE {
 #define SPYTAB		3
 #define TV_IT		1
 #define TV_ITSEL	0
-}

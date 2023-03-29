@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 
 
 #define FILEVIEW CMainFrame::mainframe->m_wndVobList.m_wndVobList
@@ -123,4 +123,3 @@ namespace GOTHIC_ENGINE {
 		virtual void DeleteChilds();
 		static VirtualVobTree_Globals& GetInstance();
 	};
-}

@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 #define IDC_SELCHG_CB 32212
 
 	BEGIN_MESSAGE_MAP(CMeshLibPane, CDockablePane)
@@ -279,4 +279,3 @@ namespace GOTHIC_ENGINE {
 		CDockablePane::OnActivate(nState, pWndOther, bMinimized);
 	}
 
-}

@@ -2,7 +2,7 @@
 // Union SOURCE file
 #include <crtversion.h>
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 
 	CString strController = "Controller";
 	CString strMoving = "MovingSpeed";
@@ -231,19 +231,22 @@ namespace GOTHIC_ENGINE {
 	void CEditorApp::SaveCustomState()
 	{
 	}
-}
 
-void GOTHIC_ENGINE::CEditorApp::EnableDrawing(bool enable)
-{
-	
-	bDrawing = enable;
-}
+	void CEditorApp::EnableDrawing(bool enable)
+	{
+
+		bDrawing = enable;
+	}
 
 
-BOOL GOTHIC_ENGINE::CEditorApp::OnIdle(LONG lCount)
-{
-	
-	if(bDrawing)
-		CEditorView::view->RedrawWindow(0, 0, RDW_INVALIDATE);
-	return CWinAppEx::OnIdle(lCount);
-}
+	BOOL CEditorApp::OnIdle(LONG lCount)
+	{
+
+		if (bDrawing)
+			CEditorView::view->RedrawWindow(0, 0, RDW_INVALIDATE);
+		return CWinAppEx::OnIdle(lCount);
+	}
+
+
+
+

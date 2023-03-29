@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 #include <assert.h>
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	CONST int DELETED_PRESET = -1;
 
 
@@ -395,4 +395,3 @@ namespace GOTHIC_ENGINE {
 		if (z >= num_in_list) return -2;
 		return z;
 	}
-}

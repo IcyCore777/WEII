@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 
 	
 	enum mlMODE
@@ -52,4 +52,3 @@ namespace GOTHIC_ENGINE {
 		afx_msg void	OnLButtonDblClk(UINT nFlags, CPoint point);
 		afx_msg void	OnSelchange();
 	};
-}

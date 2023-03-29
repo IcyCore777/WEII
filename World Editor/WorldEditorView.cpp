@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 
 
 #ifdef __G2A
@@ -155,8 +155,8 @@ namespace GOTHIC_ENGINE {
 
 				screen->DrawItems();
 			}
-		}//else
-		//if(isStartScreen)	OnDrawStartScreen();
+		}else
+		if(isStartScreen)	OnDrawStartScreen();
 		ASSERT(AfxCheckMemory());
 	}
 
@@ -484,9 +484,4 @@ namespace GOTHIC_ENGINE {
 			return TRUE;
 		return CView::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);
 	}
-}
-
-
-
-
 

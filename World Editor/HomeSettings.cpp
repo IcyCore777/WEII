@@ -5,7 +5,7 @@ __declspec(dllimport) uint s_FpsLimit; //todo FPS lim
 #pragma comment(lib, "zUnionUtils.lib")
 
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	BEGIN_MESSAGE_MAP(CHomeSettings, CCmdTarget)
 		ON_COMMAND(ID_HOLDTIME, &CHomeSettings::OnHoldtime)
 		ON_UPDATE_COMMAND_UI(ID_HOUR, &CHomeSettings::OnUpdateTime)
@@ -547,10 +547,9 @@ namespace GOTHIC_ENGINE {
 		SetMoveMode(zMM_NONE);
 	}
 
+	void CHomeSettings::OnUpdateFindvobvis(CCmdUI* pCmdUI)
+	{
+		UICheck
+	}
 
-}
 
-void GOTHIC_ENGINE::CHomeSettings::OnUpdateFindvobvis(CCmdUI* pCmdUI)
-{
-	UICheck
-}

@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union HEADER file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	class CPropertiesToolBar : public CMFCToolBar
 	{
 	public:
@@ -71,4 +71,3 @@ namespace GOTHIC_ENGINE {
 		int m_nComboHeight;
 	};
 
-}

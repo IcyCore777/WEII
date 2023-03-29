@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	struct zTMeshRenderer;
 
 	uArray<uString>		meshLib;
@@ -488,4 +488,3 @@ namespace GOTHIC_ENGINE {
 		}
 		CMainFrame::mainframe->ShowProgressBar("Done", FALSE);
 	}
-}

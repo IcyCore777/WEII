@@ -1,7 +1,7 @@
 // Supported with union (c) 2020 Union team
 // Union SOURCE file
 
-namespace GOTHIC_ENGINE {
+using namespace GOTHIC_ENGINE;
 	CProgressBar::~CProgressBar()
 	{
 		
@@ -20,4 +20,3 @@ namespace GOTHIC_ENGINE {
 		progress->SetPos(percent);
 		sysEvent();
 	}
-}
